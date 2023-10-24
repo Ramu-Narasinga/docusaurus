@@ -47,12 +47,18 @@ function useContextValue(): ContextValue {
   const {announcementBar} = useThemeConfig();
   const isBrowser = useIsBrowser();
 
-  const [isClosed, setClosed] = useState(() =>
-    isBrowser
+  console.log('isBrowser', isBrowser);
+
+  const [isClosed, setClosed] = useState(
+    () => true,
+
+    /*
       ? // On client navigation: init with local storage value
         isDismissedInStorage()
       : // On server/hydration: always visible to prevent layout shifts (will be hidden with css if needed)
         false,
+
+       */
   );
   // Update state after hydration
   useEffect(() => {
