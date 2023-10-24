@@ -49,7 +49,7 @@ const coerceToColorMode = (colorMode?: string | null): ColorMode =>
 
 const getInitialColorMode = (defaultMode: ColorMode | undefined): ColorMode =>
   ExecutionEnvironment.canUseDOM
-    ? coerceToColorMode(document.documentElement.getAttribute('data-theme'))
+    ? coerceToColorMode(defaultMode)
     : coerceToColorMode(defaultMode);
 
 const storeColorMode = (newColorMode: ColorMode) => {
