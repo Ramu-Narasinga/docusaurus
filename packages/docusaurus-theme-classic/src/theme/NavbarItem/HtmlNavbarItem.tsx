@@ -10,6 +10,14 @@ import clsx from 'clsx';
 
 import type {Props} from '@theme/NavbarItem/HtmlNavbarItem';
 
+function clsx2(...args: Parameters<typeof clsx>): string | undefined {
+  const result = clsx(args);
+  if (result === '') {
+    return undefined;
+  }
+  return result;
+}
+
 export default function HtmlNavbarItem({
   value,
   className,
@@ -19,7 +27,7 @@ export default function HtmlNavbarItem({
   const Comp = isDropdownItem ? 'li' : 'div';
   return (
     <Comp
-      className={clsx(
+      className={clsx2(
         {
           navbar__item: !mobile && !isDropdownItem,
           'menu__list-item': mobile,

@@ -20,13 +20,21 @@ function useContainerClassName() {
   return !isBlogPostPage ? 'margin-bottom--xl' : undefined;
 }
 
+function clsx2(...args: Parameters<typeof clsx>): string | undefined {
+  const result = clsx(args);
+  if (result === '') {
+    return undefined;
+  }
+  return result;
+}
+
 export default function BlogPostItem({
   children,
   className,
 }: Props): JSX.Element {
   const containerClassName = useContainerClassName();
   return (
-    <BlogPostItemContainer className={clsx(containerClassName, className)}>
+    <BlogPostItemContainer className={clsx2(containerClassName, className)}>
       <BlogPostItemHeader />
       <BlogPostItemContent>{children}</BlogPostItemContent>
       <BlogPostItemFooter />
