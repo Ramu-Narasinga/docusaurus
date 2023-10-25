@@ -7,8 +7,6 @@
 
 import React from 'react';
 import ReactDOM, {type ErrorInfo} from 'react-dom/client';
-import {BrowserRouter} from 'react-router-dom';
-import {HelmetProvider} from 'react-helmet-async';
 
 import ExecutionEnvironment from './exports/ExecutionEnvironment';
 import App from './App';
@@ -29,13 +27,7 @@ if (ExecutionEnvironment.canUseDOM) {
   window.docusaurus = docusaurus;
   const container = document.getElementById('__docusaurus')!;
 
-  const app = (
-    <HelmetProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </HelmetProvider>
-  );
+  const app = <App />;
 
   const onRecoverableError = (error: unknown, errorInfo: ErrorInfo): void => {
     console.error(

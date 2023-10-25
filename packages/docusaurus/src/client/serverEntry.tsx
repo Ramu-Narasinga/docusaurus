@@ -11,18 +11,13 @@ import fs from 'fs-extra';
 // eslint-disable-next-line no-restricted-imports
 import _ from 'lodash';
 import * as eta from 'eta';
-import {StaticRouter} from 'react-router-dom';
-import {HelmetProvider, type FilledContext} from 'react-helmet-async';
+import {type FilledContext} from 'react-helmet-async';
 import {getBundles, type Manifest} from 'react-loadable-ssr-addon-v5-slorber';
-import Loadable from 'react-loadable';
 import {minify} from 'html-minifier-terser';
 import {renderStaticApp} from './serverRenderer';
 import preload from './preload';
 import App from './App';
-import {
-  createStatefulLinksCollector,
-  LinksCollectorProvider,
-} from './LinksCollector';
+import {createStatefulLinksCollector} from './LinksCollector';
 import type {Locals} from '@slorber/static-site-generator-webpack-plugin';
 
 const getCompiledSSRTemplate = _.memoize((template: string) =>
@@ -93,23 +88,11 @@ async function doRender(locals: Locals & {path: string}) {
   const location = routesLocation[locals.path]!;
   await preload(location);
   const modules = new Set<string>();
-  const routerContext = {};
   const helmetContext = {};
 
   const linksCollector = createStatefulLinksCollector();
 
-  const app = (
-    // @ts-expect-error: we are migrating away from react-loadable anyways
-    <Loadable.Capture report={(moduleName) => modules.add(moduleName)}>
-      <HelmetProvider context={helmetContext}>
-        <StaticRouter location={location} context={routerContext}>
-          <LinksCollectorProvider linksCollector={linksCollector}>
-            <App />
-          </LinksCollectorProvider>
-        </StaticRouter>
-      </HelmetProvider>
-    </Loadable.Capture>
-  );
+  const app = <App />;
 
   const appHtml = await renderStaticApp(app);
   onLinksCollected(location, linksCollector.getCollectedLinks());
@@ -158,6 +141,10 @@ async function doRender(locals: Locals & {path: string}) {
   });
 
   try {
+    if (app) {
+      return renderedHtml;
+    }
+
     if (process.env.SKIP_HTML_MINIFICATION === 'true') {
       return renderedHtml;
     }
