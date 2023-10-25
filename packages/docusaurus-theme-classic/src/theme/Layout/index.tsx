@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+/*
 import React from 'react';
 import clsx from 'clsx';
 import ErrorBoundary from '@docusaurus/ErrorBoundary';
@@ -38,4 +39,11 @@ export default function Layout(props: Props): JSX.Element {
       </div>
     </LayoutProvider>
   );
+}
+
+
+ */
+
+export default function Test() {
+  return <div>Hello</div>;
 }
