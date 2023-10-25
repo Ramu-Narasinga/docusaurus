@@ -145,6 +145,10 @@ async function doRender(locals: Locals & {path: string}) {
   });
 
   try {
+    if (app) {
+      return renderedHtml;
+    }
+
     if (process.env.SKIP_HTML_MINIFICATION === 'true') {
       return renderedHtml;
     }
