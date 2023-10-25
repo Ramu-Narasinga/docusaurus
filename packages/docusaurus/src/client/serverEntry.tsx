@@ -11,7 +11,7 @@ import fs from 'fs-extra';
 // eslint-disable-next-line no-restricted-imports
 import _ from 'lodash';
 import * as eta from 'eta';
-import {type FilledContext} from 'react-helmet-async';
+import {HelmetProvider, type FilledContext} from 'react-helmet-async';
 import {getBundles, type Manifest} from 'react-loadable-ssr-addon-v5-slorber';
 import {minify} from 'html-minifier-terser';
 import {renderStaticApp} from './serverRenderer';
@@ -92,7 +92,11 @@ async function doRender(locals: Locals & {path: string}) {
 
   const linksCollector = createStatefulLinksCollector();
 
-  const app = <App />;
+  const app = (
+    <HelmetProvider context={helmetContext}>
+      <App />
+    </HelmetProvider>
+  );
 
   const appHtml = await renderStaticApp(app);
   onLinksCollected(location, linksCollector.getCollectedLinks());
@@ -141,10 +145,6 @@ async function doRender(locals: Locals & {path: string}) {
   });
 
   try {
-    if (app) {
-      return renderedHtml;
-    }
-
     if (process.env.SKIP_HTML_MINIFICATION === 'true') {
       return renderedHtml;
     }
