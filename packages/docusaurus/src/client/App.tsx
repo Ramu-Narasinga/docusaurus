@@ -12,18 +12,14 @@ import routes from '@generated/routes';
 import {useLocation} from '@docusaurus/router';
 import renderRoutes from '@docusaurus/renderRoutes';
 import Root from '@theme/Root';
-import SiteMetadata from '@theme/SiteMetadata';
 import normalizeLocation from './normalizeLocation';
 import {BrowserContextProvider} from './browserContext';
 import {DocusaurusContextProvider} from './docusaurusContext';
 import PendingNavigation from './PendingNavigation';
-import BaseUrlIssueBanner from './BaseUrlIssueBanner';
-import SiteMetadataDefaults from './SiteMetadataDefaults';
 
 // TODO, quick fix for CSS insertion order
 // eslint-disable-next-line import/order
 import ErrorBoundary from '@docusaurus/ErrorBoundary';
-import HasHydratedDataAttribute from './hasHydratedDataAttribute';
 
 export default function App(): JSX.Element {
   const routeElement = renderRoutes(routes);
@@ -33,14 +29,10 @@ export default function App(): JSX.Element {
       <DocusaurusContextProvider>
         <BrowserContextProvider>
           <Root>
-            <SiteMetadataDefaults />
-            <SiteMetadata />
-            <BaseUrlIssueBanner />
             <PendingNavigation location={normalizeLocation(location)}>
               {routeElement}
             </PendingNavigation>
           </Root>
-          <HasHydratedDataAttribute />
         </BrowserContextProvider>
       </DocusaurusContextProvider>
     </ErrorBoundary>
