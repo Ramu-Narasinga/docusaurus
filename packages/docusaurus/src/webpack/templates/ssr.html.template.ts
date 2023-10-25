@@ -22,10 +22,8 @@ export default `
       <script src="<%= it.baseUrl %><%= script %>" defer></script>
     <% }); %>
   </head>
-  <body <%~ it.bodyAttributes %>>
-    <%~ it.preBodyTags %>
+  <body>
     <div id="__docusaurus"><%~ it.appHtml %></div>
-    <%~ it.postBodyTags %>
   </body>
 </html>
 `;
