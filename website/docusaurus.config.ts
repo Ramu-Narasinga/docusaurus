@@ -73,8 +73,6 @@ function getNextVersionName() {
 // Test with: DOCUSAURUS_CRASH_TEST=true yarn build:website:fast
 const crashTest = process.env.DOCUSAURUS_CRASH_TEST === 'true';
 
-process.env.NODE_ENV = 'development';
-
 const isDev = process.env.NODE_ENV === 'development';
 
 const isDeployPreview =
